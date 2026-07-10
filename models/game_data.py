@@ -16,3 +16,5 @@ class GameData:
             "トマト": 0,
             "じゃがいも": 0
         }
+
+        self.selected_crop = None

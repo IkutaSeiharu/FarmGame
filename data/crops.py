@@ -1,4 +1,5 @@
 CROPS = {
+
     "小麦": {
         "price": 100,
         "grow_days": 3,
@@ -16,4 +17,5 @@ CROPS = {
         "grow_days": 7,
         "seed_price": 300
     }
+
 }
