@@ -3,6 +3,8 @@ from models.game_data import GameData
 from controllers.game_manager import GameManager
 from scenes.title_scene import TitleScene
 from scenes.game_scene import GameScene
+from scenes.score_scene import ScoreScene
+from models.score_data import ScoreData
 
 pygame.init()
 
@@ -23,6 +25,7 @@ title_scene = TitleScene()
 game_scene = GameScene(game_manager)
 
 running = True
+score_scene = None
 
 while running:
 
@@ -37,13 +40,32 @@ while running:
 
         elif current_scene == "game":
             game_scene.handle_event(event)
+        elif current_scene == "score":
 
+            if score_scene.handle_event(event):
+                current_scene = "title"
     if current_scene == "title":
         title_scene.draw(screen)
 
     elif current_scene == "game":
         game_scene.draw(screen)
+    elif current_scene == "score":
+        score_scene.draw(screen)
 
+    if current_scene == "game":
+
+        if game_manager.is_game_over():
+
+            score = game_data.money
+
+            highscore = ScoreData.load()
+
+            if score > highscore:
+                ScoreData.save(score)
+
+            score_scene = ScoreScene(score)
+
+            current_scene = "score"
     pygame.display.flip()
     clock.tick(60)
 
